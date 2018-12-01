@@ -39,6 +39,10 @@
           }
         }
       ],
+      "max-line-length": [
+        true,
+        100
+      ],
       "whitespace": [
           true,
           "check-branch",
