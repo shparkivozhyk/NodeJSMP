@@ -1,7 +1,7 @@
-import config from "./config";
+import * as config from "./config/config.json";
 import { Product, User } from "./models";
 
-console.log((<any>config).name);
+console.log(config.name);
 
 const user = new User();
 const product = new Product();
