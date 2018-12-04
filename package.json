@@ -12,9 +12,11 @@
     "tslint": "tslint -c tslint.json -p tsconfig.json  -e \"src/**/*.json\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "pre-push": [
-    "tslint"
-  ],
+  "pre-push": {
+    "run": [
+      "tslint"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shparkivozhyk/NodeJSMP.git"
