@@ -4,11 +4,8 @@
   "description": "Homework for nodejs mentoring program",
   "main": "app.js",
   "scripts": {
-    "start": "npm run build && node ./dist/app.js --exec babel-node",
-    "watch": "concurrently \"npm run watch-ts\" \"nodemon ./dist/app.js --exec babel-node\"",
-    "build": "npm run build-ts && npm run tslint",
-    "build-ts": "tsc",
-    "watch-ts": "tsc -w",
+    "start": "concurrently \"npm run ts\" \"nodemon ./dist/app.js\"",
+    "ts": "tsc -w",
     "tslint": "tslint -c tslint.json -p tsconfig.json  -e \"src/**/*.json\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -33,6 +30,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
+    "concurrently": "^4.1.0",
     "husky": "^1.2.0",
     "nodemon": "^1.18.7",
     "pre-push": "^0.1.1",
