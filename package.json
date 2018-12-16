@@ -36,5 +36,12 @@
     "pre-push": "^0.1.1",
     "tslint": "^5.11.0",
     "typescript": "^3.2.1"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.119",
+    "@types/node": "^10.12.15",
+    "@types/papaparse": "^4.5.5",
+    "lodash": "^4.17.11",
+    "papaparse": "^4.6.2"
   }
 }
