@@ -1,6 +1,6 @@
 import EventEmitter from "events";
 import fs  from "fs";
-import _ from "lodash";
+import { isEmpty, union } from "lodash";
 import { promisify } from "util";
 
 const readDir = promisify(fs.readdir);
@@ -13,22 +13,17 @@ enum FileStatus {
  }
 
 export class DirWatcher extends EventEmitter {
-  timerId: any;
-  files: string[];
-  fileTempStatistics: object;
-  fileStatistics: object;
+  private timerId: any;
+  private fileTempStatistics: object = {};
+  private fileStatistics: object = {};
 
   constructor() {
     super();
-    this.timerId = undefined;
-    this.files = [];
-    this.fileStatistics = {};
-    this.fileTempStatistics = {};
   }
 
-  checkStatus(file: string): object {
-    const fileLastModified = this.fileStatistics[file],
-          fileTimestamp = this.fileTempStatistics[file];
+  private checkStatus(file: string): object {
+    const fileLastModified = this.fileStatistics[file];
+    const fileTimestamp = this.fileTempStatistics[file];
 
     if (!fileLastModified) {
       return {[file]: FileStatus.ADDED, };
@@ -39,7 +34,7 @@ export class DirWatcher extends EventEmitter {
     }
   }
 
-  checkDir(path: any) {
+  private checkDir(path: any) {
     return readDir(path)
       .then((files) => {
           const fileTempStatistics = files.map(file => stat(`${path}/${file}`)
@@ -51,27 +46,27 @@ export class DirWatcher extends EventEmitter {
           Promise.all(fileTempStatistics)
             .then((files) => {
               let changedFiles = {};
-              _.union(files, _.keys(this.fileStatistics))
+              union(files, Object.keys(this.fileStatistics))
                 .map(file => {
-                  changedFiles = _.assign(changedFiles, this.checkStatus(file));
+                  changedFiles = {...changedFiles, ...this.checkStatus(file), };
                 });
 
-              this.fileStatistics = _.assign({}, this.fileTempStatistics);
+              this.fileStatistics = Object.assign({}, this.fileTempStatistics);
               this.fileTempStatistics = {};
-              if (!_.isEmpty(changedFiles)) {
+              if (!isEmpty(changedFiles)) {
                 this.emit("change", changedFiles);
               }
             });
         });
   }
 
-  watch(path: any, delay: number): void {
+  public watch(path: any, delay: number): void {
     this.timerId = setInterval(() => {
       this.checkDir(path);
     }, delay);
   }
 
-  unwatch(): void {
+  public unwatch(): void {
     this.timerId.unref();
   }
 }

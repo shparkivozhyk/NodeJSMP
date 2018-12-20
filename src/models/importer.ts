@@ -1,8 +1,9 @@
 import { EventEmitter } from "events";
 import fs from "fs";
-import _ from "lodash";
 import Papa from "papaparse";
 import { promisify } from "util";
+
+const readDir = promisify(fs.readFile);
 
 interface LoggingData {
   file: string;
@@ -14,27 +15,26 @@ export class Importer {
 
   constructor (private eventEmitter: EventEmitter, private async: boolean = true) {}
 
-  import (path: string): Promise<any> {
-    const readDir = promisify(fs.readFile);
+  private import (path: string): Promise<any> {
     return readDir(path, "utf8");
   }
 
-  importSync (path: string): string {
+  private importSync (path: string): string {
     return fs.readFileSync(path, "utf8");
   }
 
-  csvToJson (csv: string): object {
+  private csvToJson (csv: string): object {
     return Papa.parse(csv, {header: true, });
   }
 
-  logData (data: LoggingData ): void {
+  private logData (data: LoggingData ): void {
     console.log(`The file ${data.file} has been ${data.action}, data is `,
                 this.csvToJson(data.csv));
   }
 
-  listen (): void {
+  public listen (): void {
     this.eventEmitter.on("change", (data) => {
-      _.keys(data).map(file => {
+      Object.keys(data).map(file => {
         if (this.async) {
           this.import(file)
             .then(csv => {
