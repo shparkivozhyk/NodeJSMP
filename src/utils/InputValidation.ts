@@ -1,12 +1,7 @@
 import fs from "fs";
-import  minimist from "minimist";
 import { ErrorMessages, InfoMessages } from "../constants";
 
 export const checkInputValidity = (args: Array<string>) => {
-  const argv = minimist(args);
-  const action = argv.action || argv.a;
-  const file = argv.file || argv.f;
-
   if (!args.length) {
     process.stdout.write(InfoMessages.WRONGINPUT);
     process.stdout.write(InfoMessages.HELP);

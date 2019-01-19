@@ -8,6 +8,7 @@ if (checkInputValidity(args)) {
   const argv = minimist(args);
   const action = argv.action || argv.a;
   const file = argv.file || argv.f;
+  const path = argv.path || argv.p;
 
-  launchAction(action, file);
+  launchAction({action, file, path, });
 }
