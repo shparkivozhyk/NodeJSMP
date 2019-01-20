@@ -4,7 +4,7 @@ import multistream from "multistream";
 import path from "path";
 import request from "request";
 import through2 from "through2";
-import { InfoMessages } from "../constants";
+import { BundlerConstants, FileExtensions, InfoMessages } from "../constants";
 import { checkFilePathValidity } from "./InputValidation";
 
 interface StreamData {
@@ -12,7 +12,7 @@ interface StreamData {
   file?: string;
   path?: string;
 }
-const cssUrl = "https://drive.google.com/uc?export=download&id=1A0u_YB_7Pg3Q1qygQ547EedNxRS1Zu6k";
+
 const reverse = () => {
   process.stdin
     .pipe(through2(function write (buffer, encoding, next) {
@@ -47,15 +47,17 @@ const convertFromFile = (file: string) => {
 
 const convertToFile = (file: string) => {
     checkFilePathValidity(file);
+    const fileInfo = path.parse(file);
+    const filePath = `${fileInfo.dir}/${fileInfo.name}${FileExtensions.json}`;
     fs.createReadStream(file)
       .pipe(csvtojson())
-      .pipe(fs.createWriteStream(file.replace("csv", "json")));
+      .pipe(fs.createWriteStream(filePath));
 };
 
 const cssBundler = (dirPath: string) => {
     checkFilePathValidity(dirPath);
     const cssFiles = fs.readdirSync(dirPath).filter((file) => {
-      return path.extname(file) === ".css";
+      return path.extname(file) === FileExtensions.css;
     });
 
     const readStreams = [];
@@ -63,9 +65,10 @@ const cssBundler = (dirPath: string) => {
       readStreams.push(fs.createReadStream(`${dirPath}/${file}`));
     });
 
-    readStreams.push(request(cssUrl));
+    readStreams.push(request(BundlerConstants.cssUrl));
 
-    multistream(readStreams).pipe(fs.createWriteStream(`${dirPath}/bundle.css`));
+    multistream(readStreams)
+      .pipe(fs.createWriteStream(`${dirPath}/${BundlerConstants.bundlFileName}`));
 };
 
 export const launchAction = ({action, file, path, }: StreamData) => {
