@@ -55,7 +55,7 @@ export const actions = {
         return path.extname(file) === FileExtensions.css;
       });
       const readStreams = [];
-      const writeStream = fs.createWriteStream(writeStreamPath, {"flags": "a+", });
+      const writeStream = fs.createWriteStream(writeStreamPath, {"flags": "w+", });
       cssFiles.forEach((file) => {
         readStreams.push(fs.createReadStream(`${dirPath}/${file}`));
       });
