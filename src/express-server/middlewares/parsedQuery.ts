@@ -1,7 +1,6 @@
-import querystring from "querystring";
-import url from "url";
+import { NextFunction, Request, Response } from "express";
 
-export const parsedQuery = (req: any, res: any, next: Function): void  => {
-  req.parsedQuery = querystring.parse(url.parse(req.url).query);
+export const parsedQuery = (req: Request, res: Response, next: NextFunction): void  => {
+  req.parsedQuery = req.query;
   next();
 };

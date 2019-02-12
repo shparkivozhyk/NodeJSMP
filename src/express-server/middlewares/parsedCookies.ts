@@ -1,8 +1,8 @@
-import cookieParser from "cookie-parser";
+import { NextFunction, Request, Response } from "express";
 
-export const parsedCookies = (req: any, res: any, next: Function): void  => {
-  if (req.headers.cookies) {
-    req.parsedCookies = cookieParser.JSONCookies(req.headers.cookies);
+export const parsedCookies = (req: Request, res: Response, next: NextFunction): void  => {
+  if (req.cookies) {
+    req.parsedCookies = req.cookies;
   }
   next();
 };

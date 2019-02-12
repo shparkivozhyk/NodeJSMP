@@ -1,0 +1,10 @@
+[
+  {
+    "product_id": "1",
+    "reviews": ["Excellent product", "I am really happy"]
+  },
+  {
+    "product_id": "2",
+    "reviews": ["Poor product", "I am dissapointed"]
+  }
+]
