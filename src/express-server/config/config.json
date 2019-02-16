@@ -1,0 +1,19 @@
+{
+  "jwtSecret": "jwtsecret",
+  "userCreds": {
+    "email": "Maryna1@gmail.com",
+    "password": "Maryna1!"
+  },
+  "users": [
+    {
+      "username": "Maryna1",
+      "email": "Maryna1@gmail.com",
+      "password": "Maryna1!"
+    },
+    {
+      "username": "Maryna2",
+      "email": "Maryna2@gmail.com",
+      "password": "Maryna2!"
+    }
+  ]
+}
