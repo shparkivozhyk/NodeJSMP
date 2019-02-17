@@ -8,4 +8,8 @@ export enum ErrorMessages {
   "INCORRECTPASSWORD" = "Password isn't correct",
   "NOTOKEN" = "There is no token",
   "NOTVERIFIEDTOKEN" = "The token is not verified",
+  "FAILEDAUTH" = "Authorization is failed",
+  "FAILDEDGOOGLEAUTH" = "Google+ user is not authorized",
+  "FAILEDLOCALAUTH" = "User is not authorized",
+  "WRONGCREDENTIALS" = "Wrong credentials",
 }

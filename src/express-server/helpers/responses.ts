@@ -1,7 +1,7 @@
 interface SuccessResponse {
   email: string;
   username?: string;
-  token: string;
+  token?: string;
 }
 
 interface ErrorResponse {
