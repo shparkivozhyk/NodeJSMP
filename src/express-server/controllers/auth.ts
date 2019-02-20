@@ -36,33 +36,18 @@ export const auth = (req: Request, res: Response) => {
   }));
 };
 
-
-export const googleAuth = (req: Request, res: Response) => {
-  passport.authenticate("google", (err, user) => {
+export const passportAuth = (social: string) => (req: Request, res: Response) => {
+  passport.authenticate(social, (err, user) => {
     if (err) {
       res.json(errorResponse({
         "code": ErrorCodes.NOTFOUND,
         "message": ErrorMessages.FAILDEDGOOGLEAUTH,
       }));
     }
+
     res.json(successResponse({
       "email": user.email,
       "username": user.displayName,
-    }));
-  })(req, res);
-};
-
-export const localAuth = (req: Request, res: Response) => {
-  passport.authenticate("local", (err, user) => {
-    if (err) {
-      res.json(errorResponse({
-        "code": ErrorCodes.NOTFOUND,
-        "message": ErrorMessages.FAILEDLOCALAUTH,
-      }));
-    }
-
-    res.json(successResponse({
-      "email": req.body.email,
     }));
   })(req, res);
 };

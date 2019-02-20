@@ -1,7 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 import { useStrategies } from "../config/strategies";
-import { auth, googleAuth, localAuth } from "../controllers/auth";
+import { auth, passportAuth } from "../controllers/auth";
 import * as products from "../controllers/products";
 import * as users from "../controllers/users";
 import { verifyJWT } from "../middlewares/verifyJWT";
@@ -30,22 +30,22 @@ router.route("/auth")
   .post(auth);
 
 router.route("/auth/local")
-  .post(localAuth);
+  .post(passportAuth("local"));
 
 router.route("/auth/facebook")
   .get(passport.authenticate("facebook"));
 
 router.route("/auth/facebook/callback")
-  .get(passport.authenticate("facebook"));
+  .get(passportAuth("facebook"));
 
 router.route("/auth/twitter")
   .get(passport.authenticate("twitter"));
 
 router.route("/auth/twitter/callback")
-  .get(passport.authenticate("twitter"));
+  .get(passportAuth("twitter"));
 
 router.route("/auth/google")
   .get(passport.authenticate("google", { scope: ["email", "profile"], }));
 
 router.route("/auth/google/callback")
-  .get(googleAuth);
+  .get(passportAuth("google"));
