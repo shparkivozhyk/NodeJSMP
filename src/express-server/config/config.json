@@ -35,5 +35,10 @@
     "consumerKey": "dummyKey",
     "consumerSecret": "dummySecret",
     "callbackURL": "http://127.0.0.1:8080/auth/twitter/callback"
+  },
+  "githubConfig": {
+    "clientID":  "Iv1.0e5fa2d8fa4a67d0",
+    "clientSecret": "2c8a3f5f1ef796581a96bcd4baa36299af914632",
+    "callbackURL": "http://localhost:8080/auth/github/callback"
   }
 }

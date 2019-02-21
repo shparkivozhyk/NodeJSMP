@@ -1,5 +1,6 @@
 import passport from "passport";
 import { Strategy as FacebookStrategy } from "passport-facebook";
+import { Strategy as GithubStrategy } from "passport-github2";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as TwitterStrategy } from "passport-twitter";
@@ -41,4 +42,9 @@ export const useStrategies = () => {
     (token, updatedToken, profile, done) => {
     return done(undefined, profile);
   }));
+
+  passport.use("github", new GithubStrategy(config.githubConfig,
+    (token, updatedToken, profile, done) => {
+      return done(undefined, profile);
+    }));
 };

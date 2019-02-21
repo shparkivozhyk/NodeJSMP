@@ -49,3 +49,9 @@ router.route("/auth/google")
 
 router.route("/auth/google/callback")
   .get(passportAuth("google"));
+
+router.route("/auth/github")
+  .get(passport.authenticate("github"));
+
+router.route("/auth/github/callback")
+  .get(passportAuth("github"));
