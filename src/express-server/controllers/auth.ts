@@ -4,7 +4,7 @@ import { find } from "lodash";
 import passport from "passport";
 import config from "../config/config.json";
 import { ErrorCodes, ErrorMessages } from "../constants";
-import { errorResponse, successResponse } from "../helpers/responses";
+import { AuthError, errorResponse, successResponse } from "../helpers";
 
 export const auth = (req: Request, res: Response) => {
 
@@ -39,10 +39,7 @@ export const auth = (req: Request, res: Response) => {
 export const passportAuth = (social: string) => (req: Request, res: Response) => {
   passport.authenticate(social, (err, user) => {
     if (err) {
-      res.json(errorResponse({
-        "code": ErrorCodes.NOTFOUND,
-        "message": ErrorMessages.FAILDEDGOOGLEAUTH,
-      }));
+      throw AuthError.failedAuth(social, err);
     }
 
     res.json(successResponse({
