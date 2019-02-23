@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { find } from "lodash";
 import passport from "passport";
 import config from "../config/config.json";
 import { ErrorCodes, ErrorMessages } from "../constants";
@@ -9,7 +8,7 @@ import { AuthError, errorResponse, successResponse } from "../helpers";
 export const auth = (req: Request, res: Response) => {
 
   const {email, password, } = req.body;
-  const user = find(config.users, (user) => user.email === email);
+  const user = config.users.find((user) => user.email === email);
 
   if (!user) {
     res.json(errorResponse({
