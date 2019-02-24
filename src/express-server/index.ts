@@ -1,6 +1,15 @@
 import​​ app  ​from​​​ "./app"​;
+import { db } from "./config/db";
 import defaultConfig from "./config/defaultConfig.json";
 
-const​​ port = process.env.PORT || defaultConfig.defaultPort​;
+const​​ appPort = process.env.PORT || defaultConfig.defaultPort​;
 
-app.listen(port, () => ​console​.log(​`App listening on port ​${port}​!`​));
+db.sequelize
+  .sync()
+  .then(() => {
+    app.listen(appPort, () => ​console​.log(​`App listening on port ​${appPort}​!`​));
+    console.log("Connection has been established successfully.");
+  })
+  .catch(err => {
+    console.error("Unable to connect to the database:", err);
+  });
