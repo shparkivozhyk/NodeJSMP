@@ -1,0 +1,44 @@
+{
+  "jwtSecret": "jwtsecret",
+  "userCreds": {
+    "email": "Maryna1@gmail.com",
+    "password": "Maryna1!"
+  },
+  "users": [
+    {
+      "username": "Maryna1",
+      "email": "Maryna1@gmail.com",
+      "password": "Maryna1!"
+    },
+    {
+      "username": "Maryna2",
+      "email": "Maryna2@gmail.com",
+      "password": "Maryna2!"
+    }
+  ],
+  "sessionConfig": {
+    "secret": "sessionSecret",
+    "saveUninitialized": false,
+    "resave": false
+  },
+  "facebookConfig": {
+    "clientID": "308937796460821",
+    "clientSecret": "13db4eddc4a549d2583bcbe52318325f",
+    "callbackURL": "http://localhost:8080/auth/facebook/callback"
+  },
+  "googleConfig": {
+    "clientID": "230933718335-3f37ors9t0v7csebvovjp8eb0vkqliae.apps.googleusercontent.com",
+    "clientSecret": "3MOadpbtwC5_LgMFcPBTkSxt",
+    "callbackURL": "http://127.0.0.1:8080/auth/google/callback"
+  },
+  "twitterConfig": {
+    "consumerKey": "dummyKey",
+    "consumerSecret": "dummySecret",
+    "callbackURL": "http://127.0.0.1:8080/auth/twitter/callback"
+  },
+  "githubConfig": {
+    "clientID":  "Iv1.0e5fa2d8fa4a67d0",
+    "clientSecret": "2c8a3f5f1ef796581a96bcd4baa36299af914632",
+    "callbackURL": "http://localhost:8080/auth/github/callback"
+  }
+}

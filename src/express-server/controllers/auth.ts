@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import passport from "passport";
-import config from "../config/config.json";
+import config from "../config/authConfig.json";
+
 import { ErrorCodes, ErrorMessages } from "../constants";
 import { AuthError, errorResponse, successResponse } from "../helpers";
 

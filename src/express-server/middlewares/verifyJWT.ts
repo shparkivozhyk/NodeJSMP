@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import jwt  from "jsonwebtoken";
 import { isMatch } from "lodash";
-import userConfig from "../config/config.json";
+import userConfig from "../config/authConfig.json";
+
 import { ErrorCodes, ErrorMessages } from "../constants";
 import { errorResponse } from "../helpers/responses";
 

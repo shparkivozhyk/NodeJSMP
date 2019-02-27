@@ -4,7 +4,8 @@ import { Strategy as GithubStrategy } from "passport-github2";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as TwitterStrategy } from "passport-twitter";
-import config from "../config/config.json";
+import config from "../config/authConfig.json";
+
 import { ErrorMessages } from "../constants/index.js";
 
 export const useStrategies = () => {

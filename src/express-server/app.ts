@@ -2,7 +2,7 @@ import bodyParser from "body-parser";
 import express from "express";
 import session from "express-session";
 import passport from "passport";
-import config from "./config/config.json";
+import config from "./config/authConfig.json";
 import { parsedCookies, parsedQuery } from "./middlewares";
 import { router } from "./routes";
 
