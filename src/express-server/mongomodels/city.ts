@@ -1,9 +1,16 @@
 import { model, Schema } from "mongoose";
 
 const CitySchema: Schema = new Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true,
+    minlength: [2, "Too short city name"],
+  },
   country: String,
-  capital: Boolean,
+  capital: {
+    type: Boolean,
+    default: false,
+  },
   location: {
     lat: Number,
     long: Number,

@@ -9,7 +9,7 @@ export const getRandomCity = (req: Request, res: Response) => {
     }
 
     if (cities.length) {
-      const randomCityNumber = Math.round(Math.random() * cities.length);
+      const randomCityNumber = Math.round(Math.random() * (cities.length - 1));
       res.send(cities[randomCityNumber]);
     }
   });

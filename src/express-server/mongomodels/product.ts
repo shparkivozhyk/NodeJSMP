@@ -1,10 +1,20 @@
 import { model, Schema } from "mongoose";
 
 const ProductSchema: Schema = new Schema({
-  id: String,
-  title: String,
+  id: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+    minlength: [5, "Too short product title"],
+  },
   price: String,
-  reviews: String,
+  reviews: {
+    type: String,
+    default: "No reviews for the product",
+  },
   lastModifiedDate: Date,
 });
 

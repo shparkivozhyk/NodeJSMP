@@ -10,12 +10,12 @@ mongodb.on("open", () => {
   app.listen(appPort, () => ​console​.log(​`App listening on port ​${appPort}​!`​));
 });
 mongodb.on("error", (err) => console.error("Unable to conner to the database", err));
-// db.sequelize
-//   .sync()
-//   .then(() => {
-//     app.listen(appPort, () => ​console​.log(​`App listening on port ​${appPort}​!`​));
-//     console.log("Connection has been established successfully.");
-//   })
-//   .catch(err => {
-//     console.error("Unable to connect to the database:", err);
-//   });
+
+db.sequelize
+  .sync()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+  })
+  .catch(err => {
+    console.error("Unable to connect to the database:", err);
+  });
