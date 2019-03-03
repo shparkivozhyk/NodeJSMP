@@ -104,3 +104,15 @@ export const getMongoReviews = (req: Request, res: Response) => {
     res.send(product["reviews"]);
   });
 };
+
+export const deleteMongoProduct = (req: Request, res: Response) => {
+  const { product_id, } = req.params;
+
+  Product.findOneAndDelete({id: product_id, }, (error: Error, product: object) => {
+    if (error) {
+      console.error("Error", error);
+    }
+
+    res.send(product);
+  });
+};

@@ -37,3 +37,15 @@ export const getMongoUsers = (req: Request, res: Response) => {
     res.send(users);
   });
 };
+
+export const deleteMongoUser = (req: Request, res: Response) => {
+  const { user_id, } = req.params;
+
+  User.findOneAndDelete({_id: user_id, }, (error: Error, user: object) => {
+    if (error) {
+      console.error("Error", error);
+    }
+
+    res.send(user);
+  });
+};

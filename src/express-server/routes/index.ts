@@ -64,16 +64,24 @@ router.route("/mongo/api/cities")
   .get(cities.getAllCities)
   .post(cities.createCity);
 
+router.route("/mongo/api/cities/:city_id")
+  .put(cities.updateCity)
+  .delete(cities.deleteCity);
+
 router.route("/mongo/api/users")
   .get(users.getMongoUsers)
   .post(users.createMongoUser);
+
+router.route("/mongo/api/users/:user_id")
+  .delete(users.deleteMongoUser);
 
 router.route("/mongo/api/products")
   .get(products.getMongoProducts)
   .post(products.createMongoProduct);
 
 router.route("/mongo/api/products/:product_id")
-  .get(products.getMongoProduct);
+  .get(products.getMongoProduct)
+  .delete(products.deleteMongoProduct);
 
 router.route("/mongo/api/products/:product_id/reviews")
   .get(products.getMongoReviews);
