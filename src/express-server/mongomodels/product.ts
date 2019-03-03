@@ -5,6 +5,11 @@ const ProductSchema: Schema = new Schema({
   title: String,
   price: String,
   reviews: String,
+  lastModifiedDate: Date,
+});
+
+ProductSchema.pre("save", function () {
+  this["lastModifiedDate"] = new Date();
 });
 
 export const Product = model("Product", ProductSchema);

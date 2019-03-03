@@ -8,6 +8,19 @@ const CitySchema: Schema = new Schema({
     lat: Number,
     long: Number,
   },
+  lastModifiedDate: Date,
+});
+
+CitySchema.pre("save", function () {
+  this["lastModifiedDate"] = new Date();
+});
+
+CitySchema.pre("findOneAndUpdate", function () {
+  this.update({}, {
+    $set: {
+      lastModifiedDate: new Date(),
+    },
+  });
 });
 
 export const City = model("City", CitySchema);
