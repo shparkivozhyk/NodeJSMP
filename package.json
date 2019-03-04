@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "concurrently \"npm run ts\" \"nodemon ./dist/app.js\"",
-    "start-express-server": "concurrently \"npm run ts\" \"nodemon ./dist/express-server/index.js\"",
+    "start-express-server:dev": "concurrently \"npm run ts\" \"nodemon ./dist/express-server/index.js\"",
+    "start-express-server": "node ./dist/express-server/index.js",
     "ts": "tsc -w",
     "tslint": "tslint -c tslint.json -p tsconfig.json  -e \"src/**/*.json\"",
     "test": "echo \"Error: no test specified\" && exit 1"
