@@ -132,6 +132,146 @@ paths:
         description: Error
         schema:
           $ref: "#/definitions/ErrorResponse"
+  /api/users:
+    x-swagger-router-controller: users
+    get:
+      description: Returns all users from the database
+      operationId: getUsers
+      responses:
+        "200":
+          description: Success
+          schema: 
+            type: array
+            items:
+              $ref: "#/definitions/UserSchema"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Create new user
+      operationId: createUser
+      parameters:
+      - in: body
+        name: body
+        schema:
+          $ref: "#/definitions/UserSchema"
+      responses:
+        "200":
+          description: Success
+          schema: 
+            $ref: "#/definitions/UserSchema"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"        
+  /api/users/{id}:
+    x-swagger-router-controller: users
+    delete:
+      description: Delete user with selected id
+      operationId: deleteUser
+      parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+      responses:
+        "200":
+          description: Success
+          schema: 
+            $ref: "#/definitions/UserSchema"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/products:
+    x-swagger-router-controller: products
+    get:
+      description: Returns all products
+      operationId: getProducts
+      responses:
+        "200":
+          description: Success
+          schema: 
+            type: array
+            items:
+              $ref: "#/definitions/ProductSchema"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Create new product
+      operationId: createProduct
+      parameters:
+      - in: body
+        name: body
+        schema:
+          $ref: "#/definitions/ProductSchema"
+      responses:
+        "200":
+          description: Success
+          schema: 
+            $ref: "#/definitions/ProductSchema"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/products/{id}:
+    x-swagger-router-controller: products
+    get:
+      description: Returns product with selected id
+      operationId: getProduct
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ProductSchema"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Delete product with selected id
+      operationId: deleteProduct
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ProductSchema"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"  
+  /api/products/{id}/reviews:
+    x-swagger-router-controller: products
+    get:
+      description: Returns reviews for product with selected id
+      operationId: getReviews
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ReviewSchema"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -159,6 +299,43 @@ definitions:
         type: number
       long:
         type: number
+  UserSchema:
+    type: object
+    required:
+      - username
+      - password
+      - email
+    properties:
+      username:
+        type: string
+      password: 
+        type: string
+      email:
+        type: string
+      lastModifiedDate:
+        type: string
+  ProductSchema:
+    type: object
+    required:
+      - id
+      - title
+    properties:
+      id:
+        type: string
+      title:
+        type: string
+      price:
+        type: string
+      reviews:
+        type: string
+        default: ''
+      lastModifiedDate:
+        type: string
+  ReviewSchema:
+    type: object
+    properties:
+      reviews:
+        type: string
   HelloWorldResponse:
     required:
       - message
