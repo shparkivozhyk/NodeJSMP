@@ -1,12 +1,11 @@
 swagger: "2.0"
 info:
   version: "0.0.1"
-  title: Hello World App
-# during dev, should point to your local machine
+  title: NodeJSMP
 host: localhost:10010
-# basePath prefixes all resource paths 
+# basePath prefixes all resource paths
 basePath: /
-# 
+#
 schemes:
   # tip: remove http to make production-grade
   - http
@@ -17,13 +16,21 @@ consumes:
 # format of the responses to the client (Accepts)
 produces:
   - application/json
+tags:
+- name: city
+  description: Cities API
+- name: user
+  description: User API
+- name: product
+  description: Product API
+- name: review
+  description: Reviews for selected product
 paths:
   /hello:
     # binds a127 app logic to a route
     x-swagger-router-controller: hello_world
     get:
       description: Returns 'Hello' to the caller
-      # used as the method name of the controller
       operationId: hello
       parameters:
         - name: name
@@ -45,13 +52,15 @@ paths:
   /api/random:
     x-swagger-router-controller: cities
     get:
+      tags:
+      - city
       description: Returns random city from the database
       operationId: getRandomCity
       responses:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/CityResponse"
+            $ref: "#/definitions/CitySchema"
         default:
           description: Error
           schema:
@@ -59,6 +68,8 @@ paths:
   /api/cities:
     x-swagger-router-controller: cities
     get:
+      tags:
+      - city
       description: Returns all cities from the database
       operationId: getAllCities
       responses:
@@ -67,67 +78,77 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/CityResponse"
-              
+              $ref: "#/definitions/CitySchema"
+
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse" 
+            $ref: "#/definitions/ErrorResponse"
     post:
+      tags:
+      - city
       description: Create new city
       operationId: createCity
       parameters:
       - in: body
         name: body
+        description: The city data
         schema:
-          $ref: "#/definitions/CityResponse"
+          $ref: "#/definitions/CitySchema"
       responses:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/CityResponse"
-              
+            $ref: "#/definitions/CitySchema"
+
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"        
+            $ref: "#/definitions/ErrorResponse"
   /api/cities/{id}:
    x-swagger-router-controller: cities
    delete:
+    tags:
+    - city
     description: Delete city
     operationId: deleteCity
     parameters:
     - name: id
       in: path
+      description: City id to delete
       type: string
       required: true
     responses:
       "200":
         description: Success
         schema:
-          $ref: "#/definitions/CityResponse"
+          $ref: "#/definitions/CitySchema"
       default:
         description: Error
         schema:
           $ref: "#/definitions/ErrorResponse"
-   put: 
+   put:
+    tags:
+    - city
     description: Update city with selected id
     operationId: updateCity
     parameters:
     - in: body
       name: body
+      description: The city data to update
       required: false
       schema:
-        $ref: "#/definitions/CityResponse"
+        $ref: "#/definitions/CitySchema"
     - name: id
       in: path
+      description: The city id to update
       required: true
       type: string
     responses:
       "200":
         description: Success
         schema:
-          $ref: "#/definitions/CityResponse"
+          $ref: "#/definitions/CitySchema"
       default:
         description: Error
         schema:
@@ -135,12 +156,14 @@ paths:
   /api/users:
     x-swagger-router-controller: users
     get:
+      tags:
+      - user
       description: Returns all users from the database
       operationId: getUsers
       responses:
         "200":
           description: Success
-          schema: 
+          schema:
             type: array
             items:
               $ref: "#/definitions/UserSchema"
@@ -149,36 +172,42 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
+      tags:
+      - user
       description: Create new user
       operationId: createUser
       parameters:
       - in: body
         name: body
+        description: The user data
         schema:
           $ref: "#/definitions/UserSchema"
       responses:
         "200":
           description: Success
-          schema: 
+          schema:
             $ref: "#/definitions/UserSchema"
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"        
+            $ref: "#/definitions/ErrorResponse"
   /api/users/{id}:
     x-swagger-router-controller: users
     delete:
+      tags:
+      - user
       description: Delete user with selected id
       operationId: deleteUser
       parameters:
       - name: id
         in: path
+        description: The user id to delete
         type: string
         required: true
       responses:
         "200":
           description: Success
-          schema: 
+          schema:
             $ref: "#/definitions/UserSchema"
         default:
           description: Error
@@ -187,12 +216,14 @@ paths:
   /api/products:
     x-swagger-router-controller: products
     get:
+      tags:
+      - product
       description: Returns all products
       operationId: getProducts
       responses:
         "200":
           description: Success
-          schema: 
+          schema:
             type: array
             items:
               $ref: "#/definitions/ProductSchema"
@@ -201,17 +232,20 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
+      tags:
+      - product
       description: Create new product
       operationId: createProduct
       parameters:
       - in: body
         name: body
+        description: The product data
         schema:
           $ref: "#/definitions/ProductSchema"
       responses:
         "200":
           description: Success
-          schema: 
+          schema:
             $ref: "#/definitions/ProductSchema"
         default:
           description: Error
@@ -220,11 +254,14 @@ paths:
   /api/products/{id}:
     x-swagger-router-controller: products
     get:
+      tags:
+      - product
       description: Returns product with selected id
       operationId: getProduct
       parameters:
       - name: id
         in: path
+        description: The product id to return
         required: true
         type: string
       responses:
@@ -237,11 +274,14 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
     delete:
+      tags:
+      - product
       description: Delete product with selected id
       operationId: deleteProduct
       parameters:
       - name: id
         in: path
+        description: The product id to delete
         required: true
         type: string
       responses:
@@ -252,15 +292,19 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"  
+            $ref: "#/definitions/ErrorResponse"
   /api/products/{id}/reviews:
     x-swagger-router-controller: products
     get:
+      tags:
+      - product
+      - review
       description: Returns reviews for product with selected id
       operationId: getReviews
       parameters:
       - name: id
         in: path
+        description: The product id to get reviews
         required: true
         type: string
       responses:
@@ -276,7 +320,7 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
-  CityResponse:
+  CitySchema:
     type: object
     required:
     - name
@@ -289,16 +333,23 @@ definitions:
         type: boolean
         default: false
       location:
-        $ref: "#/definitions/Location"
+        $ref: "#/definitions/LocationSchema"
       lastModifiedDate:
         type: string
-  Location:
+    example:
+      name: Minsk
+      country: Belarus
+      capital: true
+  LocationSchema:
     type: object
     properties:
       lat:
         type: number
       long:
         type: number
+    example:
+      lat: 58.06
+      long: 0.04
   UserSchema:
     type: object
     required:
@@ -308,12 +359,16 @@ definitions:
     properties:
       username:
         type: string
-      password: 
+      password:
         type: string
       email:
         type: string
       lastModifiedDate:
         type: string
+    example:
+      username: maryna
+      password: maryna1
+      email: maryna@gmail.com
   ProductSchema:
     type: object
     required:
@@ -328,14 +383,20 @@ definitions:
         type: string
       reviews:
         type: string
-        default: ''
       lastModifiedDate:
         type: string
+    example:
+      id: 1
+      title: First product
+      price: 100
+      reviews: 'new review'
   ReviewSchema:
     type: object
     properties:
       reviews:
         type: string
+    example:
+      reviews: the first review
   HelloWorldResponse:
     required:
       - message

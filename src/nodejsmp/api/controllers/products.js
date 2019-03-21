@@ -53,7 +53,7 @@ const getReviews = (req, res) => {
     if (error) {
       console.error("Error", error);
     }
-    console.log('reviews', product.reviews);
+
     res.send({
       reviews: product["reviews"],
     });
