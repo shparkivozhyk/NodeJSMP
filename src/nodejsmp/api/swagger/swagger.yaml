@@ -3,20 +3,17 @@ info:
   version: "0.0.1"
   title: NodeJSMP
 host: localhost:10010
-# basePath prefixes all resource paths
-basePath: /
-#
+basePath: /api
 schemes:
-  # tip: remove http to make production-grade
   - http
   - https
-# format of bodies a client can send (Content-Type)
 consumes:
   - application/json
-# format of the responses to the client (Accepts)
 produces:
   - application/json
 tags:
+- name: auth
+  description: Auth API
 - name: city
   description: Cities API
 - name: user
@@ -27,7 +24,6 @@ tags:
   description: Reviews for selected product
 paths:
   /hello:
-    # binds a127 app logic to a route
     x-swagger-router-controller: hello_world
     get:
       description: Returns 'Hello' to the caller
@@ -49,6 +45,97 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/auth:
+    x-swagger-router-controller: auth
+    post:
+      tags:
+      - auth
+      description: Simple username/password auth
+      operationId: auth
+      parameters:
+      - in: body
+        name: body
+        description: User name and password
+        schema:
+          $ref: "#/definitions/AuthBodySchema"
+      responses:
+        "200":
+          description: Success
+          schema: 
+            $ref: "#/definitions/AuthResponseSchema"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"    
+  /api/auth/local:
+    x-swagger-router-controller: auth
+    post:
+      tags:
+      - auth
+      description: Simple local passport auth
+      parameters:
+      - in: body
+        name: body
+        description: User name and password
+        schema:
+          $ref: "#/definitions/AuthBodySchema"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/AuthResponseSchema"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/auth/facebook:
+    x-swagger-router-controller: auth
+    get:
+      tags:
+      - auth
+      description: Facebook auth
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: object
+            properties: {}
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/auth/google:
+    x-swagger-router-controller: auth
+    get:
+      tags:
+      - auth
+      description: Google auth
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: object
+            properties: {}
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/auth/github:
+    x-swagger-router-controller: auth
+    get:
+      tags:
+      - auth
+      description: Github auth
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: object
+            properties: {}
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"          
   /api/random:
     x-swagger-router-controller: cities
     get:
@@ -320,6 +407,36 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
+  AuthBodySchema:
+    type: object
+    required:
+    - username
+    - password
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+    example:
+      username: maryna
+      password: maryna1!
+  AuthResponseSchema:
+    type: object
+    required:
+    - username
+    - password
+    - token
+    properties:
+      username: 
+        type: string
+      password: 
+        type: string
+      token: 
+        type: string
+    example:
+      username: maryna
+      password: maryna1!
+      token: q1w2d3r4t5y6y67u89i90jgghw
   CitySchema:
     type: object
     required:
@@ -405,7 +522,13 @@ definitions:
         type: string
   ErrorResponse:
     required:
+      - code
       - message
     properties:
+      code:
+        type: string
       message:
         type: string
+    example:
+      code: 404
+      message: Not found
